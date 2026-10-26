@@ -5,6 +5,7 @@
   ╚════██║██╔═══╝ ██║   ██║██╔══██╗██╔══╝       ██╔██╗ ██║
   ███████║██║     ╚██████╔╝██║  ██║███████╗    ██╔╝ ██╗███████╗
   ╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝    ╚═╝  ╚═╝╚══════╝
+  Systematic Preprocessing and Optimization for Robust Evaluation
   sharded, memory-bounded Perturb-seq preprocessing
 ```
 
