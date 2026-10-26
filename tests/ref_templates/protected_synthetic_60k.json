@@ -1,0 +1,7 @@
+{
+  "metadata": {"name": "synthetic_60k test list", "dataset_gene_id_format": "symbol", "note": "exercises tiers, ribosomal exemption, low-expressed genes and cell-cycle genes"},
+  "protected_genes": {
+    "tier1_mixed": {"tier": 1, "genes": ["RPL5", "RPS6", "MCM5", "TOP2A", "GENE0010", "GENE0020", "GENE0030", "GENE0040", "GENE0050", "GENE0060", "GENE0070", "GENE0080", "GENE0090", "GENE0100"]},
+    "tier2_more": {"tier": 2, "genes": ["RPL13", "GENE0110", "GENE0120", "GENE0130", "GENE0140", "GENE0150", "GENE0160", "GENE0170", "GENE0180", "GENE0190", "GENE0200", "GENE0210", "NOT_A_GENE_IN_PANEL"]}
+  }
+}

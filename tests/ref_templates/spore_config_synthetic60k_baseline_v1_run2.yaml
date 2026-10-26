@@ -1,0 +1,89 @@
+# SPORE v3.0 baseline on synthetic_60k (obj_012 SPORE-XL, T2 reference run). Fresh output dirs for every run.
+paths:
+  project_root: {REF}/intermediate/spore_baseline/run2
+  raw_h5ad: {REF}/data/synthetic_60k.h5ad
+  processed_dir: processed
+  splits_dir: splits
+  figures_dir: figures
+  log_dir: logs
+
+dataset:
+  name: synth60k
+  organism: human
+  cell_type: synthetic
+  perturbation_col: gene
+  control_label: non-targeting
+  perturbation_type: CRISPRi
+  gene_id_format: symbol
+
+runtime:
+  n_jobs: 6
+  sparse_on_load: true
+  memory_monitor: true
+  large_dataset_mode: auto
+  large_dataset_threshold: 500000
+  checkpointing: true
+
+phase0_ingestion: {chunk_size: 50000}
+phase1_detection:
+  enabled: true
+  gene_id_harmonization: true
+  modality_detection: false
+  combinatorial_detection: false
+  cell_line_detection: false
+
+phase2_cell_triage:
+  mt_threshold: 0.2
+  ribo_prefixes: [RPL, RPS]
+  min_genes_per_cell: 200
+  max_genes_per_cell: 10000
+  min_counts_per_cell: 500
+  max_counts_per_cell: 80000
+
+phase3_ambient: {enabled: false}
+phase4_doublets: {enabled: false}
+phase5_escaper_filtering:
+  efficiency_threshold: 0.5
+  escaper_percentile: 10
+  min_cells_per_perturbation: 50
+  direction: auto
+
+phase6_gene_triage:
+  min_cells_expressing: 10
+  pct_filter: 0.01
+  mean_umi_threshold: 0.25
+  rescue_perturbation_targets: true
+
+phase7_splits:
+  mode: zero_shot
+  random_seed: 42
+  stratify_bins: 4
+  test_n: 50
+  val_n: 25
+
+phase8_hvg:
+  enabled: true
+  n_top_genes: 500
+  method: seurat_v3
+  rescue_perturbation_targets: true
+  protected_gene_list: {REF}/data/protected_synthetic_60k.json
+
+phase9_normalization: {target_sum: 10000, log_transform: true, method: lognorm}
+
+phase10_confounders:
+  cell_cycle_regression: true
+  s_genes: tirosh2016
+  g2m_genes: tirosh2016
+  batch_correction: {enabled: true, method: harmony, batch_key: gem_group, confounding_ari_threshold: 0.5, min_cells_per_batch: 50}
+  imputation_prohibited: true
+  fit_on_train_only: true
+
+phase11_cell_line: {enabled: false}
+
+phase12_metacell:
+  enabled: true
+  mbk_k: 2
+  seed: 42
+
+plotting: {style: dark, dpi: 150, save_figures: false, figure_format: png}
+output: {cleanup_intermediates: false, generate_report: true}

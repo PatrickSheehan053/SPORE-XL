@@ -1,0 +1,95 @@
+dataset:
+  cell_type: synthetic
+  control_label: non-targeting
+  gene_id_format: symbol
+  name: synth60k
+  organism: human
+  perturbation_col: gene
+  perturbation_type: CRISPRi
+output:
+  cleanup_intermediates: false
+  generate_report: true
+paths:
+  figures_dir: figures
+  log_dir: logs
+  processed_dir: processed
+  project_root: {REF}/intermediate/spore_baseline_figs/run2
+  raw_h5ad: {REF}/data/synthetic_60k.h5ad
+  splits_dir: splits
+phase0_ingestion:
+  chunk_size: 50000
+phase10_confounders:
+  batch_correction:
+    batch_key: gem_group
+    confounding_ari_threshold: 0.5
+    enabled: true
+    method: harmony
+    min_cells_per_batch: 50
+  cell_cycle_regression: true
+  fit_on_train_only: true
+  g2m_genes: tirosh2016
+  imputation_prohibited: true
+  s_genes: tirosh2016
+phase11_cell_line:
+  enabled: false
+phase12_metacell:
+  enabled: true
+  mbk_k: 2
+  seed: 42
+phase1_detection:
+  cell_line_detection: false
+  combinatorial_detection: false
+  enabled: true
+  gene_id_harmonization: true
+  modality_detection: false
+phase2_cell_triage:
+  max_counts_per_cell: 80000
+  max_genes_per_cell: 10000
+  min_counts_per_cell: 500
+  min_genes_per_cell: 200
+  mt_threshold: 0.2
+  ribo_prefixes:
+  - RPL
+  - RPS
+phase3_ambient:
+  enabled: false
+phase4_doublets:
+  enabled: false
+phase5_escaper_filtering:
+  direction: auto
+  efficiency_threshold: 0.5
+  escaper_percentile: 10
+  min_cells_per_perturbation: 50
+phase6_gene_triage:
+  mean_umi_threshold: 0.25
+  min_cells_expressing: 10
+  pct_filter: 0.01
+  rescue_perturbation_targets: true
+phase7_splits:
+  mode: zero_shot
+  random_seed: 42
+  stratify_bins: 4
+  test_n: 50
+  val_n: 25
+phase8_hvg:
+  enabled: true
+  method: seurat_v3
+  n_top_genes: 500
+  protected_gene_list: {REF}/data/protected_synthetic_60k.json
+  rescue_perturbation_targets: true
+phase9_normalization:
+  log_transform: true
+  method: lognorm
+  target_sum: 10000
+plotting:
+  dpi: 150
+  figure_format: png
+  save_figures: true
+  style: dark
+runtime:
+  checkpointing: true
+  large_dataset_mode: auto
+  large_dataset_threshold: 500000
+  memory_monitor: true
+  n_jobs: 6
+  sparse_on_load: true

@@ -1,0 +1,77 @@
+# HPC1 on-cluster acceptance test, part 2: SPORE-XL on synthetic_60k with the SAME SPORE settings as synthetic_60k_spore_v3.yaml (3 shards, 8 blocks).
+# Placeholders <SCRATCH_WORK_DIR>, <SPORE_ROOT>. Then: tests/compare_v4.py spore --xl <this file after sed> --spore-dir <SCRATCH_WORK_DIR>/synthetic_60k/spore_v3
+# Not in this file on purpose: runtime, phase0_ingestion, phase1_detection, phase3_ambient, phase4_doublets, phase10_confounders (cell-cycle
+# regression and Harmony), phase11_cell_line and plotting are SPORE v3.0 sections that v4.0 does not read (docs/KNOWN_ISSUES.md);
+# the SPORE v3.0 defaults of src/engine/config_v3.py fill them in and nothing from them is run.
+paths:
+  project_root: <SCRATCH_WORK_DIR>/synthetic_60k/xl_compat
+  raw_h5ad: ''
+  processed_dir: processed
+  splits_dir: splits
+  figures_dir: figures
+  log_dir: logs
+dataset:
+  name: synth60k
+  organism: human
+  cell_type: synthetic
+  perturbation_col: gene
+  control_label: non-targeting
+  perturbation_type: CRISPRi
+  gene_id_format: symbol
+phase2_cell_triage:
+  mt_threshold: 0.2
+  ribo_prefixes:
+  - RPL
+  - RPS
+  min_genes_per_cell: 200
+  max_genes_per_cell: 10000
+  min_counts_per_cell: 500
+  max_counts_per_cell: 80000
+phase5_escaper_filtering:
+  efficiency_threshold: 0.5
+  escaper_percentile: 10
+  min_cells_per_perturbation: 50
+  direction: auto
+phase6_gene_triage:
+  min_cells_expressing: 10
+  pct_filter: 0.01
+  mean_umi_threshold: 0.25
+  rescue_perturbation_targets: true
+phase7_splits:
+  mode: zero_shot
+  random_seed: 42
+  stratify_bins: 4
+  test_n: 50
+  val_n: 25
+phase8_hvg:
+  enabled: true
+  n_top_genes: 500
+  method: seurat_v3
+  rescue_perturbation_targets: true
+  protected_gene_list: <SPORE_ROOT>/tests/ref_templates/protected_synthetic_60k.json
+phase9_normalization:
+  target_sum: 10000
+  log_transform: true
+  method: lognorm
+phase12_metacell:
+  enabled: true
+  mbk_k: 2
+  seed: 42
+output:
+  cleanup_intermediates: false
+  generate_report: true
+xl:
+  compat: v3
+  source:
+    kind: h5ad_rows
+    h5ad: <SCRATCH_WORK_DIR>/synthetic_60k/synthetic_60k.h5ad
+    shard_rows: 20000
+  work_dir: _xl_work
+  n_blocks: 8
+  control_block_rows: 1000
+  hvg_subsample_cells: 100000
+  bucket_compression: lzf
+  memory_budget_gb: 24
+  merge_mode: ondisk
+  merge_split_outputs: auto
+  merge_cap_gb: 40

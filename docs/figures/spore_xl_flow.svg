@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#8a8794" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1200" height="600" rx="18" fill="#ffffff"/>
+  <text x="44" y="52" font-size="24" font-weight="700" fill="#251729">How SPORE-XL moves a screen</text>
+  <text x="44" y="80" font-size="15" fill="#5a5560">A task holds one shard or one block at a time, so memory stays flat as screens grow.</text>
+
+  <!-- input -->
+  <text x="44" y="132" font-size="13" font-weight="700" fill="#251729" letter-spacing="0.5">INPUT</text>
+  <rect x="44" y="146" width="160" height="300" rx="14" fill="#f4f3f6" stroke="#cccccc"/>
+  <g fill="#d9d6de">
+    <rect x="62" y="166" width="124" height="7" rx="3.5"/><rect x="62" y="180" width="124" height="7" rx="3.5"/>
+    <rect x="62" y="194" width="124" height="7" rx="3.5"/><rect x="62" y="208" width="124" height="7" rx="3.5"/>
+    <rect x="62" y="222" width="124" height="7" rx="3.5"/><rect x="62" y="236" width="124" height="7" rx="3.5"/>
+    <rect x="62" y="250" width="124" height="7" rx="3.5"/><rect x="62" y="264" width="124" height="7" rx="3.5"/>
+    <rect x="62" y="278" width="124" height="7" rx="3.5"/><rect x="62" y="292" width="124" height="7" rx="3.5"/>
+  </g>
+  <text x="124" y="336" font-size="16" font-weight="700" fill="#1a1a1a" text-anchor="middle">Raw screen</text>
+  <text x="124" y="358" font-size="13" fill="#5a5560" text-anchor="middle">raw UMI counts</text>
+  <text x="124" y="378" font-size="13" fill="#5a5560" text-anchor="middle">h5ad, 10x, loom, csv</text>
+  <text x="124" y="410" font-size="13" font-weight="700" fill="#251729" text-anchor="middle">up to millions</text>
+  <text x="124" y="428" font-size="13" font-weight="700" fill="#251729" text-anchor="middle">of cells</text>
+
+  <line x1="212" y1="296" x2="250" y2="296" stroke="#8a8794" stroke-width="1.8" marker-end="url(#arrow)"/>
+
+  <!-- shards -->
+  <text x="258" y="132" font-size="13" font-weight="700" fill="#251729" letter-spacing="0.5">1 · SHARDS</text>
+  <rect x="258" y="146" width="220" height="300" rx="14" fill="#eef8f2" stroke="#AEE3C0" stroke-width="1.5"/>
+  <rect x="290" y="166" width="156" height="34" rx="8" fill="#AEE3C0" stroke="#3497A9" stroke-width="1.2"/>
+  <rect x="282" y="174" width="156" height="34" rx="8" fill="#AEE3C0" stroke="#3497A9" stroke-width="1.2"/>
+  <rect x="274" y="182" width="156" height="34" rx="8" fill="#AEE3C0" stroke="#3497A9" stroke-width="1.2"/>
+  <text x="352" y="204" font-size="13" font-weight="700" fill="#1f4d4f" text-anchor="middle">40,000 cells each</text>
+  <text x="368" y="240" font-size="13" fill="#5a5560" text-anchor="middle">consecutive cells,</text>
+  <text x="368" y="257" font-size="13" fill="#5a5560" text-anchor="middle">one task per shard</text>
+  <g font-size="14" fill="#1a1a1a">
+    <rect x="276" y="276" width="184" height="40" rx="9" fill="#ffffff" stroke="#AEE3C0"/>
+    <text x="368" y="301" text-anchor="middle">cell QC</text>
+    <rect x="276" y="326" width="184" height="40" rx="9" fill="#ffffff" stroke="#AEE3C0"/>
+    <text x="368" y="351" text-anchor="middle">knockdown statistics</text>
+    <rect x="276" y="376" width="184" height="40" rx="9" fill="#ffffff" stroke="#AEE3C0"/>
+    <text x="368" y="401" text-anchor="middle">route cells to blocks</text>
+  </g>
+
+  <line x1="486" y1="296" x2="524" y2="296" stroke="#8a8794" stroke-width="1.8" marker-end="url(#arrow)"/>
+
+  <!-- global decisions -->
+  <text x="532" y="132" font-size="13" font-weight="700" fill="#251729" letter-spacing="0.5">2 · DECIDED ONCE</text>
+  <rect x="532" y="146" width="200" height="300" rx="14" fill="#251729"/>
+  <text x="632" y="180" font-size="14" fill="#AEE3C0" text-anchor="middle">from statistics of</text>
+  <text x="632" y="199" font-size="14" fill="#AEE3C0" text-anchor="middle">every shard and block</text>
+  <g font-size="14" fill="#ffffff">
+    <text x="556" y="240">QC limits</text>
+    <text x="556" y="274">escaper thresholds</text>
+    <text x="556" y="308">genes kept</text>
+    <text x="556" y="342">train / val / test split</text>
+    <text x="556" y="376">5,000-gene panel</text>
+  </g>
+  <g fill="#3497A9"><circle cx="546" cy="235" r="3"/><circle cx="546" cy="269" r="3"/><circle cx="546" cy="303" r="3"/><circle cx="546" cy="337" r="3"/><circle cx="546" cy="371" r="3"/></g>
+  <text x="632" y="420" font-size="13" fill="#c9c3d1" text-anchor="middle">applied everywhere</text>
+
+  <line x1="740" y1="296" x2="778" y2="296" stroke="#8a8794" stroke-width="1.8" marker-end="url(#arrow)"/>
+
+  <!-- blocks -->
+  <text x="786" y="132" font-size="13" font-weight="700" fill="#251729" letter-spacing="0.5">3 · BLOCKS</text>
+  <rect x="786" y="146" width="220" height="300" rx="14" fill="#efeef7" stroke="#c9c6e6" stroke-width="1.5"/>
+  <g>
+    <rect x="804" y="166" width="184" height="50" rx="8" fill="#ffffff" stroke="#403B78" stroke-width="1.2"/>
+    <rect x="812" y="174" width="52" height="34" rx="5" fill="#403B78" opacity="0.9"/>
+    <rect x="868" y="174" width="38" height="34" rx="5" fill="#403B78" opacity="0.65"/>
+    <rect x="910" y="174" width="30" height="34" rx="5" fill="#403B78" opacity="0.45"/>
+    <rect x="944" y="174" width="36" height="34" rx="5" fill="#403B78" opacity="0.3"/>
+  </g>
+  <text x="896" y="240" font-size="13" fill="#5a5560" text-anchor="middle">every cell of a perturbation</text>
+  <text x="896" y="257" font-size="13" fill="#5a5560" text-anchor="middle">in one block, one task per block</text>
+  <g font-size="14" fill="#1a1a1a">
+    <rect x="804" y="276" width="184" height="40" rx="9" fill="#ffffff" stroke="#c9c6e6"/>
+    <text x="896" y="301" text-anchor="middle">remove escapers</text>
+    <rect x="804" y="326" width="184" height="40" rx="9" fill="#ffffff" stroke="#c9c6e6"/>
+    <text x="896" y="351" text-anchor="middle">split and normalize</text>
+    <rect x="804" y="376" width="184" height="40" rx="9" fill="#ffffff" stroke="#c9c6e6"/>
+    <text x="896" y="401" text-anchor="middle">metacells</text>
+  </g>
+
+  <line x1="1014" y1="296" x2="1048" y2="296" stroke="#8a8794" stroke-width="1.8" marker-end="url(#arrow)"/>
+
+  <!-- outputs -->
+  <text x="1056" y="132" font-size="13" font-weight="700" fill="#251729" letter-spacing="0.5">4 · OUTPUT</text>
+  <rect x="1056" y="146" width="104" height="70" rx="10" fill="#403B78"/>
+  <text x="1108" y="178" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">train</text>
+  <text x="1108" y="198" font-size="12" fill="#e3e1f2" text-anchor="middle">+ controls</text>
+  <rect x="1056" y="226" width="104" height="56" rx="10" fill="#3480a9"/>
+  <text x="1108" y="259" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">val</text>
+  <rect x="1056" y="292" width="104" height="56" rx="10" fill="#CB3D22"/>
+  <text x="1108" y="325" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">test</text>
+  <rect x="1056" y="360" width="104" height="86" rx="10" fill="#ffffff" stroke="#cccccc"/>
+  <text x="1108" y="390" font-size="14" font-weight="700" fill="#251729" text-anchor="middle">15 checks</text>
+  <text x="1108" y="410" font-size="12" fill="#5a5560" text-anchor="middle">report</text>
+  <text x="1108" y="428" font-size="12" fill="#5a5560" text-anchor="middle">8 figures</text>
+
+  <!-- footer -->
+  <line x1="44" y1="486" x2="1160" y2="486" stroke="#e6e4ea"/>
+  <g font-size="14" fill="#1a1a1a">
+    <circle cx="52" cy="520" r="6" fill="#AEE3C0" stroke="#3497A9"/>
+    <text x="66" y="525">Shard: a slice of consecutive cells</text>
+    <circle cx="352" cy="520" r="6" fill="#403B78"/>
+    <text x="366" y="525">Block: whole perturbations, never split between blocks</text>
+    <circle cx="772" cy="520" r="6" fill="#CB3D22"/>
+    <text x="786" y="525">No perturbation is in more than one split</text>
+  </g>
+  <text x="44" y="566" font-size="13" fill="#8a8794">The result does not depend on how many shards or blocks a run uses.</text>
+</svg>

@@ -1,0 +1,107 @@
+# GSE314342 primary CD4+ T cell genome-scale CRISPRi, REST arm: SPORE-XL v4.0 PRODUCTION run as ONE command, `sbatch --output=<log folder>/slurm_%j.out slurm/spore_xl.sbatch <this config>` (11,491,456 barcodes in 94 Rest members, about 8M cells after guide assignment).
+#
+# Placeholders (the code refuses a config that still holds one; docs/HPC_SETUP.md has the sed commands):
+#   <OUTPUT_DIR>        folder that holds the run folders (the run folder name below is the label this config writes)
+#   <CD4_TAR>           GSE314342_RAW.tar (read in place, read-only)
+#   <SPORE_ROOT>        the SPORE-XL v4.0 repository on /group (code, recipe, the protected-gene list)
+#   <SCRATCH_WORK_DIR>  a directory on the cluster /scratch for the working files (projected about 650 GB, 780 GB with margin)
+#   (the run date in the folder name is fixed to 20261022; it is only a label)
+# `spore_xl.py run` does the intake of the 94 Rest members, the protected-list expression gate (below), plan ... report and the verification. The job script sets the
+# environment; one node: 16 CPUs and 400 GB were used on 22 Oct (32 CPUs and 400 GB proposed); node count, --mem and wall time are decided by Patrick.
+# Production defaults: budget panel (exactly 5,000 genes), no ghost rescue, escaper-score counts in the report, lognorm hybrid, diagnostics, parts only.
+# Not in this file on purpose: runtime, phase0_ingestion, phase1_detection, phase3_ambient, phase4_doublets, phase10_confounders (cell-cycle
+# regression and Harmony), phase11_cell_line and plotting are SPORE v3.0 sections that v4.0 does not read (docs/KNOWN_ISSUES.md);
+# the SPORE v3.0 defaults of src/engine/config_v3.py fill them in and nothing from them is run.
+paths:
+  project_root: <OUTPUT_DIR>/spore_20261022_p5000_protcd4rest_v1150t2300_seed42_tnbudget_xlv4
+  raw_h5ad: ''
+  processed_dir: processed
+  splits_dir: splits
+  figures_dir: figures
+  log_dir: logs
+dataset:
+  name: GSE314342_CD4T_Rest
+  organism: human
+  cell_type: CD4T
+  perturbation_col: gene
+  control_label: non-targeting
+  perturbation_type: CRISPRi
+  gene_id_format: symbol
+phase2_cell_triage:
+  mt_method: explicit_list
+  mt_threshold: 0.2
+  mt_genes:
+  - MT-ND1
+  - MT-ND2
+  - MT-ND3
+  - MT-ND4
+  - MT-ND4L
+  - MT-ND5
+  - MT-ND6
+  - MT-CO1
+  - MT-CO2
+  - MT-CO3
+  - MT-ATP6
+  - MT-ATP8
+  - MT-CYB
+  ribo_prefixes:
+  - RPL
+  - RPS
+  min_genes_per_cell: 200
+  max_genes_per_cell: 10000
+  min_counts_per_cell: 500
+  max_counts_per_cell: 80000
+phase5_escaper_filtering:
+  efficiency_threshold: 0.5
+  escaper_percentile: 10
+  min_cells_per_perturbation: 50
+  direction: auto
+phase6_gene_triage:
+  min_cells_expressing: 10
+  pct_filter: 0.01
+  mean_umi_threshold: 0.25
+  rescue_perturbation_targets: true
+  rescue_combinatorial_constituents: false
+phase7_splits:
+  mode: zero_shot
+  random_seed: 42
+  stratify_bins: 4
+  test_n: 2300
+  val_n: 1150
+phase8_hvg:
+  enabled: true
+  n_top_genes: 5000
+  method: seurat_v3
+  rescue_perturbation_targets: true
+  protected_gene_list: <SPORE_ROOT>/protected_genes/protected_genes_CD4_T_Rest.json   # the INPUT list (version in its metadata); the gate writes the list actually used into the run folder
+  protected_expression_gate: true          # after the intake: genes detected in < 1 percent of the CONTROL cells are removed from the tahoe_menu tier and flagged in tiers 1-2
+  # protected_expression_min_fraction: 0.01
+  target_node_policy: budget      # production default (P2): held-out targets (3,450) + protected (368) are always nodes; max_target_nodes below
+  max_target_nodes: 4300          # must exceed the forced target nodes (at most 3,818); admits about 480 training targets
+phase9_normalization:
+  target_sum: 10000
+  log_transform: true
+  method: lognorm
+phase12_metacell:
+  enabled: true
+  mbk_k: 2
+  seed: 42
+output:
+  cleanup_intermediates: false
+  generate_report: true
+diagnostics:
+  batch_col: gem_group            # R<replicate>L<lane>, written by the Flex intake
+  donor_col: donor
+  confound_tvd_warn: 0.5
+xl:
+  source:
+    kind: recipe
+    recipe: <SPORE_ROOT>/src/intake/recipes/GSE314342_CD4T-Rest.yaml
+    tar: <CD4_TAR>
+  work_dir: <SCRATCH_WORK_DIR>/cd4_rest_v4_work
+  n_blocks: 128
+  control_block_rows: 120000
+  hvg_subsample_cells: 100000
+  bucket_compression: lzf
+  merge_split_outputs: never      # parts are the output (about 8M cells); `spore_xl.py merge` makes merged files later
+  memory_budget_gb: 24

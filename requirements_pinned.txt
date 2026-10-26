@@ -1,0 +1,74 @@
+# SPORE-XL v4.0 pinned requirements = the EXACT environment the v4.0 tests and the K562 / RPE1 graduation runs used (laptop envs/spore, full pip freeze).
+# pandas 2.3.1 is deliberate (pandas 3 changes the split RNG path). Equivalence with SPORE v3.0 is only claimed when both run in ONE environment:
+# the compare tool refuses runs whose numpy/scipy/pandas/scanpy/anndata/scikit-learn/PYTHONHASHSEED differ.
+# REQUIRES Python >= 3.12 on Linux x86_64 with glibc >= 2.28 (numpy 2.5.4, scipy 1.18.1, scanpy 1.12.4, anndata 0.13.4 have NO Python 3.11 wheels).
+# The old cluster env `perturb` is Python 3.11.9 and cannot run v4.0: make a 3.12 venv (HPC1: uv, see docs/HPC_SETUP.md).
+# Install:  python3.12 -m venv spore_env ; source spore_env/bin/activate ; pip install --only-binary=:all: -r requirements_pinned.txt
+# (requirements.txt = the loose minimum.) colorama is a Windows-only dependency of tqdm and is harmless on Linux.
+anndata==0.13.4
+annotated-types==0.8.0
+anyio==4.15.1
+array-api-compat==1.15.0
+biothings_client==0.5.1
+certifi==2026.10.18
+cloudpickle==3.1.2
+colorama==0.4.6
+contourpy==1.4.0
+cycler==0.12.1
+donfig==0.8.1.post1
+fast-array-utils==1.5.1
+fonttools==4.67.0
+formulaic==1.2.2
+google-crc32c==1.9.0
+h11==0.16.0
+h5py==3.16.0
+harmonypy==0.0.10
+httpcore==1.0.9
+httpx==0.28.1
+idna==3.20
+interface_meta==2.0.1
+joblib==1.6.0
+kiwisolver==1.5.1
+legacy-api-wrap==1.5
+llvmlite==0.50.0
+matplotlib==3.11.2
+msgspec==0.22.0
+mygene==3.2.2
+narwhals==2.27.1
+natsort==8.4.0
+networkx==3.7
+numba==0.68.0
+numcodecs==0.17.0
+numpy==2.5.4
+packaging==26.3
+pandas==2.3.1
+patsy==1.0.3
+pillow==13.0.0
+psutil==7.2.2
+pyarrow==26.0.0
+pydantic==2.14.1
+pydantic-settings==2.16.0
+pydantic_core==2.50.1
+pynndescent==0.6.0
+pyparsing==3.3.3
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.4
+pytz==2026.5
+PyYAML==6.0.3
+scanpy==1.12.4
+scikit-learn==1.9.1
+scikit-misc==0.5.3
+scipy==1.18.1
+scverse-misc==0.1.7
+seaborn==0.13.2
+session-info2==0.4.2
+six==1.17.0
+statsmodels==0.15.0
+threadpoolctl==3.7.0
+tqdm==4.70.1
+typing-inspection==0.4.4
+typing_extensions==4.16.0
+tzdata==2026.5
+umap-learn==0.5.12
+wrapt==2.5.1
+zarr==3.4.1

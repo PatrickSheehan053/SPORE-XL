@@ -1,0 +1,30 @@
+# SPORE-XL intake recipe: GSE314342 primary CD4+ T-cell genome-scale CRISPRi Perturb-seq, REST arm (10x Flex).
+# Read by src/intake_10x_flex_tar.py. The tar path is NOT stored here: set xl.source.tar in the run config (<TAR_PATH>).
+name: GSE314342_CD4T-Rest
+dataset: GSE314342
+arm: Rest
+
+# one shard per member of the tar whose name contains member_match and ends with member_suffix; members are processed in SORTED name order
+member_match: "_Rest_"
+member_suffix: ".h5"
+# the member name carries the design: GSM id, replicate, lane, donor, arm (named groups are written into obs)
+member_name_regex: '^(?P<gsm>GSM\d+)_CD4i_R(?P<replicate>\d+)L(?P<lane>\d+)_D(?P<donor>\d+)_(?P<arm>Rest|Stim8hr|Stim48hr)_sample_filtered_feature_bc_matrix\.h5$'
+
+# 10x Flex features: gene expression rows are kept as the matrix, guide-capture rows only decide the target
+gene_feature_type: "Gene Expression"
+guide_feature_regex: "crispr|guide|protospacer"
+
+# target assignment, exactly the verified tally rule (assign_guides_h5tar.py): a guide counts at >= min_umi UMI, the target is the guide
+# name minus the -N suffix, two guides of the same target count once, a cell is written when it has EXACTLY ONE target
+min_umi: 3
+target_pattern: '-\d+$'
+# label normalization, applied to the target BEFORE the targets of a cell are counted (so JUN guide 1 + JUN guide 2 = one target)
+label_fixes:
+  "1-Jun": JUN        # Excel turned JUN-1 / JUN-2 into dates
+  "2-Jun": JUN
+control_targets: [NTC, CTRL]
+control_label: non-targeting
+
+perturbation_col: gene
+x_dtype: float32
+chunk_cells: 20000

@@ -1,0 +1,41 @@
+repo_path,source_path_under_thesis,note
+src/cleanup.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/cleanup.py,identical to source (8 Jul 2026 rebuild)
+src/diagnostics.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/diagnostics.py,identical to source (8 Jul 2026 rebuild)
+src/phase00_sparse_convert.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase00_sparse_convert.py,identical to source (8 Jul 2026 rebuild)
+src/phase01_detection.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase01_detection.py,identical to source (8 Jul 2026 rebuild)
+src/phase02_cell_triage.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase02_cell_triage.py,identical to source (8 Jul 2026 rebuild)
+src/phase03_ambient.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase03_ambient.py,identical to source (8 Jul 2026 rebuild)
+src/phase04_doublets.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase04_doublets.py,identical to source (8 Jul 2026 rebuild)
+src/phase05_escaper_filtering.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase05_escaper_filtering.py,identical to source (8 Jul 2026 rebuild)
+src/phase06_gene_triage.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase06_gene_triage.py,identical to source (8 Jul 2026 rebuild)
+src/phase07_splits.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase07_splits.py,identical to source (8 Jul 2026 rebuild)
+src/phase08_hvg.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase08_hvg.py,identical to source (8 Jul 2026 rebuild)
+src/phase08_worker.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase08_worker.py,identical to source (8 Jul 2026 rebuild)
+src/phase09_normalization.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase09_normalization.py,identical to source (8 Jul 2026 rebuild)
+src/phase10_confounders.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase10_confounders.py,identical to source (8 Jul 2026 rebuild)
+src/phase10_worker.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase10_worker.py,identical to source (8 Jul 2026 rebuild)
+src/phase11_cell_line_separation.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase11_cell_line_separation.py,identical to source (8 Jul 2026 rebuild)
+src/phase12_metacell.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/phase12_metacell.py,identical to source (8 Jul 2026 rebuild)
+src/plotting.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/plotting.py,identical to source (8 Jul 2026 rebuild)
+src/reporting.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/reporting.py,identical to source (8 Jul 2026 rebuild)
+src/utils.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/src/utils.py,identical to source (8 Jul 2026 rebuild)
+spore_local.py,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/spore_light.py,"renamed; stale-p9 fix; fresh-folder guard; --resume; protected-list lookup; finds its own src/; run banners renamed"
+spore_cluster.py,new (replaces SPORE_plus SPORE+_express.py),SLURM runner built on spore_local
+configs/spore_config_rpe1.yaml,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/configs/spore_light_config_rpe1_canary.yaml,"repo-relative paths; subsetter block added"
+configs/spore_config_k562.yaml,the original thesis cluster runs, SPORE+/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/spore_light_config_k562.yaml,"settings of the successful July K562 runs (threshold 3M, test 960 / val 480); repo-relative paths; Phase 12 mbk_k; v2.0 protected list"
+configs/spore_config_h1hesc.yaml,the original thesis cluster runs, SPORE+/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/spore_light_config_vcc.yaml,"settings of the July VCCv3 run; repo-relative paths; Phase 12 mbk_k; base h1-hESC list"
+requirements.txt,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/requirements.txt,"scikit-misc added; optional extras listed"
+protected_genes/protected_genes_K562.json,the original thesis cluster runs, SPORE+/protected_gene_lists/protected_genes_k562.json,"v2.0, 312 genes incl. 227 Tahoe targets (md5 05b96719)"
+protected_genes/protected_genes_RPE1.json,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/protected_genes/protected_genes_RPE1.json,identical to source
+protected_genes/protected_genes_h1_hESC.json,OBJECTS/obj_009.1_topology_aware_gnn_v2/HPC_v2_launch/HPC_K562_SPORE_launch/SPORE_light/protected_genes/protected_genes_h1_hESC.json,identical to source
+tools/label_detection.py,SPORE_plus/label_detection.py,docstring and printed hints point at SPORE configs
+CHANGELOG.md,HPC_v2_launch/CHANGES_exp_009.1.md,rewritten as a version history
+docs/figures/prefilter_qc.png,markdowns/misc/writing/plots/chapter_2_figures_working/png/2.2.3_plot.png,thesis Chapter 2 figure
+docs/figures/qc_joint_landscape.png,markdowns/misc/writing/plots/chapter_2_figures_working/png/2.2.3_joint_plot.png,thesis Chapter 2 figure
+docs/figures/escapers.png,markdowns/misc/writing/plots/chapter_2_figures_working/png/2.2.4_plot.png,thesis Chapter 2 figure
+docs/figures/gene_triage.png,markdowns/misc/writing/plots/chapter_2_figures_working/png/2.2.5_plot.png,thesis Chapter 2 figure
+docs/figures/splits_dashboard.png,markdowns/misc/writing/plots/chapter_2_figures_working/png/2.3_plot.png,thesis Chapter 2 figure
+docs/figures/leakage_firewall.png,markdowns/misc/writing/plots/chapter_2_figures_working/png/2.3_code_snippet.png,thesis Chapter 2 figure
+docs/figures/hvg_target_rescue.png,markdowns/misc/writing/plots/chapter_2_figures_working/png/2.4.1_plot.png,thesis Chapter 2 figure
+docs/figures/pca_landscape.png,markdowns/misc/writing/plots/chapter_2_figures_working/png/2.4.3_plot.png,thesis Chapter 2 figure
+docs/figures/control_preserving_rule.png,markdowns/misc/writing/plots/chapter_2_figures_working/png/2.4.5_code_snippet.png,thesis Chapter 2 figure

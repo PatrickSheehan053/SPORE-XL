@@ -1,0 +1,40 @@
+# `spore_xl.py convert` recipe: DLD-1 GSE337988 sublib2, Low MOI arm (CRISPRi, 1,196,592 cells). First real R-object case.
+#
+# Inputs (paths on your computer; the same files exist on the cluster library):
+#   *_assays.h5  : dense int32 /assay001, 1,196,592 cells x 36,601 genes (verified 2026-10-21 with h5py: the ONLY dataset in the file)
+#   cells.tsv.gz : cell table exported from the *_se.rds (1,196,592 rows, 29 colData columns)
+#   genes.tsv    : gene table with 36,601 rows. The 23,480-row genes.tsv of 17 Oct (dld1_meta) is WRONG for this matrix: its gene_id values are
+#                  GUIDE names (A1CF_P1_1, ...), i.e. a NAMES vector of the guide library. 36,601 is the GRCh38-2020-A transcriptome size.
+#                  Make the right one with src/intake/R/export_se_tables_v2.R (with an R installation that can read the object)
+#                  and, if it lists several candidates, pass --gene-path for the one that sits under the MAIN experiment. UNTESTED on the real
+#                  .rds (the script was tested on a mock; local R has no Bioconductor).
+# Decisions taken from Handoff 17OCT2026 sec. 4.1: collapse guides to genes, about 100 cells per gene, keep controls, singlets only.
+dataset: GSE337988__DLD1-CRISPRi
+source:
+  format: dense_h5_tables
+  path: <path on your computer>/GSE337988_sublib2_processed_objects_Low_assays.h5
+  h5_dataset: /assay001
+  cells_table: <path on your computer>/cells.tsv.gz
+  genes_table: <GENES_TSV_FROM_export_se_tables_v2>     # the corrected table; this recipe will not load until it is a real path
+  orientation: cells_by_genes
+  cell_index_column: barcode
+  gene_id_column: gene_id
+obs:
+  label_column: assignment_v2        # gene-level assignment (guide_name has the guide); NTC for the non-targeting controls
+  keep: "demux_type_v2 == 'singlet'" # 770,717 singlets; doublets and unknown demultiplexing are dropped (no multi-target cells enter)
+  drop_labels: [nan, '', None, NTC_MENG4]
+  batch_column: Sample               # 24 samples
+  extra_columns: [Biological_replicate, MOI, guide_name]
+control_labels: [NTC]                # ASK DIRECTOR: NTC_MENG4 (292 cells) looks like a second control class; it is DROPPED here (drop_labels) rather than guessed
+control_label_out: non-targeting
+label_fixes:
+  strip: true
+  excel_dates: true
+  case_fold_to_genes: true
+subsample:
+  per_label_max: 100                 # Handoff: about 100 single-guide cells per gene (about 454k perturbed cells) plus all controls
+  seed: 42
+genes:
+  symbol_column: gene_id             # replace with the symbol column of the corrected table if it has one
+  duplicate_symbols: report
+perturbation_col: gene

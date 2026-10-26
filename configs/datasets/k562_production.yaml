@@ -1,0 +1,102 @@
+# K562 GWPS, SPORE-XL v4.0 run (b): PRODUCTION defaults (budget panel, no ghost rescue, escaper-score counts, lognorm hybrid, diagnostics).
+#
+# Source: Michele's CSR file read IN PLACE and read-only: 1,989,578 cells x 8,248 genes (71 GB). Settings match the 21 Oct graduation run (n_top_genes 5000, val_n 800, test_n 1600, seed 42, min_cells_per_perturbation 50).
+# Placeholders (the code refuses a config that still holds one; docs/HPC_SETUP.md has the sed commands):
+#   <OUTPUT_DIR>        folder that holds the run folders (the run folder name below is the label this config writes)
+#   <K562_H5AD>         the raw single-cell K562 GWPS .h5ad (read in place, read-only)
+#   <SPORE_ROOT>        the SPORE-XL v4.0 repository on /group (protected list, and the code)
+#   <SCRATCH_WORK_DIR>  a directory on HPC1 /scratch for the working files (about 170 GB; 235 GB peak with the clean-up off)
+#   (the run date in the folder name is fixed to 20261022; it is only a label)
+# Environment for EVERY stage: PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 MPLBACKEND=Agg XL_SPORE_ROOT=<SPORE_ROOT>; Python 3.12 venv from requirements_pinned.txt.
+# Every difference to run (a) is traced to P2-P6 by: python -B tools/diff_runs.py --ref <run (a) config> --new <this run config>.
+# Not in this file on purpose: runtime, phase0_ingestion, phase1_detection, phase3_ambient, phase4_doublets, phase10_confounders (cell-cycle
+# regression and Harmony), phase11_cell_line and plotting are SPORE v3.0 sections that v4.0 does not read (docs/KNOWN_ISSUES.md);
+# the SPORE v3.0 defaults of src/engine/config_v3.py fill them in and nothing from them is run.
+paths:
+  project_root: <OUTPUT_DIR>/spore_20261022_p5000_prottahoe_v800t1600_seed42_tnbudget_xlv4
+  raw_h5ad: ''
+  processed_dir: processed
+  splits_dir: splits
+  figures_dir: figures
+  log_dir: logs
+dataset:
+  name: K562_GWPS
+  organism: human
+  cell_type: K562
+  perturbation_col: gene
+  control_label: non-targeting
+  perturbation_type: CRISPRi
+  gene_id_format: ensembl
+phase2_cell_triage:
+  mt_method: explicit_list
+  mt_threshold: 0.2
+  mt_genes:
+  - MT-ND1
+  - MT-ND2
+  - MT-ND3
+  - MT-ND4
+  - MT-ND4L
+  - MT-ND5
+  - MT-ND6
+  - MT-CO1
+  - MT-CO2
+  - MT-CO3
+  - MT-ATP6
+  - MT-ATP8
+  - MT-CYB
+  ribo_prefixes:
+  - RPL
+  - RPS
+  min_genes_per_cell: 200
+  max_genes_per_cell: 10000
+  min_counts_per_cell: 500
+  max_counts_per_cell: 80000
+phase5_escaper_filtering:
+  efficiency_threshold: 0.5
+  escaper_percentile: 10
+  min_cells_per_perturbation: 50
+  direction: auto
+phase6_gene_triage:
+  min_cells_expressing: 10
+  pct_filter: 0.01
+  mean_umi_threshold: 0.25
+  rescue_perturbation_targets: true
+  rescue_combinatorial_constituents: false
+phase7_splits:
+  mode: zero_shot
+  random_seed: 42
+  stratify_bins: 4
+  test_n: 1600
+  val_n: 800
+phase8_hvg:
+  enabled: true
+  n_top_genes: 5000
+  method: seurat_v3
+  rescue_perturbation_targets: true
+  protected_gene_list: <SPORE_ROOT>/protected_genes/protected_genes_K562.json
+  target_node_policy: budget      # production default (P2); max_target_nodes defaults to 0.7 x n_top_genes = 3500
+  max_target_nodes: 3500
+phase9_normalization:
+  target_sum: 10000
+  log_transform: true
+  method: lognorm
+phase12_metacell:
+  enabled: true
+  mbk_k: 2
+  seed: 42
+output:
+  cleanup_intermediates: false
+  generate_report: true
+xl:
+  source:
+    kind: h5ad_rows
+    h5ad: <K562_H5AD>
+    shard_rows: 40000
+  work_dir: <SCRATCH_WORK_DIR>/k562_gwps_v4_work
+  n_blocks: 128
+  control_block_rows: 40000
+  hvg_subsample_cells: 100000
+  bucket_compression: lzf
+  plan_workers: 14
+  merge_split_outputs: never      # parts are the output; `spore_xl.py merge` makes merged files later (P10)
+  memory_budget_gb: 24

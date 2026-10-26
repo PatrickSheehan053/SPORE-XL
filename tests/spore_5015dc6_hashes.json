@@ -1,0 +1,17 @@
+{
+  "spore_commit": "5015dc6",
+  "sha256": {
+    "spore_local.py": "eca430bc554fcc6d050d44ecdd84ce135bfbf032c4e98cb8a9f2064dba694456",
+    "src/utils.py": "c3dc17e4a7f44a393b64235c2717e95c5604938ee09ab259e887beb62a4920e7",
+    "src/phase00_sparse_convert.py": "fe2572ca2f33389b3b355a51db7865e652f26038a99173de702ead4358ac320a",
+    "src/phase01_detection.py": "772a89f2b92bb33c95e8a7f8734d2775bc95eb57cae9da329dcfceddfd26f09f",
+    "src/phase02_cell_triage.py": "c95b4dfcce421486eccf3db2bbe169ea16611556751990027779ebe0de545cf6",
+    "src/phase05_escaper_filtering.py": "8b4fc0b28f76b1dc65e9888d814d6e9e65771f3cd15fc9f44638eedf5aa7d06c",
+    "src/phase06_gene_triage.py": "3f56370eebe5c2bd63d1bddca3ea46cfea4da0f0380ff113079ef53b415a61d4",
+    "src/phase07_splits.py": "c7d90b131290d59e4fc332a0e2b8b2c44c8a10560cba93bfcce6745212d1f1dc",
+    "src/phase08_hvg.py": "d302dcf8a7b1319e0bdc80bd6c47267cb130e5e7e8dead90a19f38d8cb582992",
+    "src/phase08_worker.py": "fa1b7bd4c10e25ca701218620266ce5d4db71494746f2e871559a3812cd373af",
+    "src/phase09_normalization.py": "7d4f6abc466fceefdbd939a65fef4735bb075fefc3193ab05d553a1958db8000",
+    "src/phase12_metacell.py": "fde135e16685319b7bab1907b131d30dd132fcdc86a5ab4540a45117a9dc6df5"
+  }
+}

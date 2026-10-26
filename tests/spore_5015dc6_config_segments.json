@@ -1,0 +1,21 @@
+{
+  "spore_commit": "5015dc6",
+  "source": "spore_local.py",
+  "source_sha256": "eca430bc554fcc6d050d44ecdd84ce135bfbf032c4e98cb8a9f2064dba694456",
+  "sha256_of_segments": {
+    "env:OMP_NUM_THREADS": "8bbfc73a7afb8736de2d94a3fb4d9f9d3d2f0d5287d6ad55270e31e7a6d7c843",
+    "env:OPENBLAS_NUM_THREADS": "7ace56200f9d18f5cc2e2d687bfa4e882af2a93f55064e617dd8d281ccc37bd7",
+    "env:MKL_NUM_THREADS": "5d8e826b2d3d0c925b8c1874be09c065ac7259cf36057f8979956454f44bccef",
+    "env:VECLIB_MAXIMUM_THREADS": "42d286786831d9e86c06299963e0b031facfe7afa78e0e23585f7d4edbfc81f1",
+    "env:NUMEXPR_NUM_THREADS": "31282af2bd984500f7a680bec231f4c4a96bc7bfa14ef8c14dfc52cc1843ea01",
+    "env:MALLOC_ARENA_MAX": "89147f22996eca395a5ee145aac54ba3bf94ef73bfcff49131c1e8c90a1768eb",
+    "env:MALLOC_MMAP_THRESHOLD_": "4e85554391b548db2e24393b6fe2d2137ec5d1c56faa9d367905c75af9306854",
+    "_DEFAULTS": "5b17fe1d29f1c95d5332c280cab1aee8495676411ed54b6ee941b16edfe4edc8",
+    "_deep_merge": "c7a432cae1b49c18d1866f04ac06a5c63e0f4cfd2a91b6eb9ae1f8a880176471",
+    "_resolve_paths": "c200685d370530de3ef376d19dab3ef2a691bca37b03de2330945bb6e96f9528",
+    "_apply_light_overrides": "98a5a798c76b7b39d78a2adebfdf540c47f9fdbbedde525cd0905983c9945558",
+    "load_config": "f393b74984eb1434651fcb9ac982a77ca14a7c683f69f7a4e526be4c791404ce",
+    "_split_targets": "ff580cd03702e685d1da627bbfcc60a5d48db8a52c8c028d2d4da2515d718bd0",
+    "report_heldout_coverage": "2cda920247c5b5a4feb5413736482965100e4f1df7e7a10f9d1e7171ba514cec"
+  }
+}

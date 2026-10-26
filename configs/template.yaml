@@ -1,0 +1,52 @@
+# SPORE-XL v4.0 example config: a sparse .h5ad (or the output of `spore_xl.py convert`) with a perturbation column. Same sections and defaults as
+# SPORE v3.0 (every key of the SPORE v3.0 defaults, src/engine/config_v3.py, is valid) plus the `xl:` section. Run: python -B spore_xl.py run --config this.yaml
+paths:
+  project_root: runs/my_dataset/spore_20261101_p5000_protcurated_v800t1600_seed42_xl   # the run folder (new; nothing is overwritten)
+  raw_h5ad: ''                          # unused by XL (xl.source below is the input)
+  processed_dir: processed
+  splits_dir: splits
+  figures_dir: figures
+  log_dir: logs
+dataset:
+  name: my_dataset                      # file prefix of every output
+  organism: human
+  perturbation_col: gene                # obs column with the perturbation label (the gene symbol, controls as control_label)
+  control_label: non-targeting
+  perturbation_type: CRISPRi            # CRISPRa and multi-target labels are refused in v4.0
+  gene_id_format: symbol                # symbol | ensembl | entrez (translated once in `plan`)
+phase2_cell_triage: {mt_threshold: 0.2, min_genes_per_cell: 200, max_genes_per_cell: 10000, min_counts_per_cell: 500, max_counts_per_cell: 80000}
+phase5_escaper_filtering:
+  escaper_percentile: 10
+  min_cells_per_perturbation: 50
+  escaper_score: report                 # off | report (count rule 2, apply rule 1) | union | replace   (production default: report)
+phase6_gene_triage: {min_cells_expressing: 10, pct_filter: 0.01, mean_umi_threshold: 0.25, rescue_perturbation_targets: true}
+phase7_splits: {mode: zero_shot, random_seed: 42, stratify_bins: 4, val_n: 800, test_n: 1600}   # counts of perturbations, scale to your dataset
+phase8_hvg:
+  n_top_genes: 5000
+  method: seurat_v3
+  protected_gene_list: protected_genes/protected_genes_K562.json   # optional
+  # protected_expression_gate: true       # optional: genes detected in < protected_expression_min_fraction (0.01) of the control cells are dropped from the list's tahoe_menu tier;
+  #                                       # the gated list is written into the run folder (manifest/protected_genes_gated.json), the input list is never changed
+  # target_node_policy: budget          # production default; `all` = v3.0 (panel grows above n_top_genes)
+  # max_target_nodes: 3500              # default 0.7 x n_top_genes
+phase9_normalization: {target_sum: 10000, log_transform: true, method: lognorm}
+phase12_metacell: {enabled: true, mbk_k: 2, seed: 42}
+diagnostics:                            # optional; batch / donor columns are found by name otherwise
+  # batch_col: gem_group
+  # donor_col: donor
+  confound_tvd_warn: 0.5                # a perturbation is flagged when its batch-mix distance from the controls is >= this ...
+  confound_alpha: 0.001                 # ... AND beyond random sampling of the same number of control cells (Monte Carlo p-value)
+xl:
+  # compat: v3                          # reproduce SPORE v3.0 exactly (tests); leave out for the production defaults
+  source:
+    kind: h5ad_rows                     # h5ad_rows | h5ad_obs | recipe (10x Flex tar)
+    h5ad: data/my_dataset.h5ad          # raw integer counts, sparse CSR
+    shard_rows: 40000                   # about 5 GB of RAM per task at 3,000 stored values per cell
+  work_dir: _xl_work                    # may be an absolute path on fast scratch storage
+  n_blocks: 128                         # perturbation blocks (controls get extra blocks of control_block_rows cells)
+  control_block_rows: 40000
+  hvg_subsample_cells: 100000
+  bucket_compression: lzf
+  memory_budget_gb: 24                  # a task whose projected RAM exceeds this is refused before it starts
+  # plan_workers: 8                     # parallel sharding in `plan` (or pass --workers)
+  # merge_split_outputs: never          # never (default) | auto | always; `spore_xl.py merge` makes merged files later
