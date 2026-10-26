@@ -1,8 +1,8 @@
-# SPORE-XL v4.0 pinned requirements = the EXACT environment the v4.0 tests and the K562 / RPE1 graduation runs used (laptop envs/spore, full pip freeze).
+# SPORE-XL v4.0 pinned requirements: the exact environment of the test suite and of every showcase run in the README (a full pip freeze).
 # pandas 2.3.1 is deliberate (pandas 3 changes the split RNG path). Equivalence with SPORE v3.0 is only claimed when both run in ONE environment:
 # the compare tool refuses runs whose numpy/scipy/pandas/scanpy/anndata/scikit-learn/PYTHONHASHSEED differ.
 # REQUIRES Python >= 3.12 on Linux x86_64 with glibc >= 2.28 (numpy 2.5.4, scipy 1.18.1, scanpy 1.12.4, anndata 0.13.4 have NO Python 3.11 wheels).
-# The old cluster env `perturb` is Python 3.11.9 and cannot run v4.0: make a 3.12 venv (HPC1: uv, see docs/HPC_SETUP.md).
+# If your cluster has no Python 3.12, docs/HPC_SETUP.md shows how to install one with uv.
 # Install:  python3.12 -m venv spore_env ; source spore_env/bin/activate ; pip install --only-binary=:all: -r requirements_pinned.txt
 # (requirements.txt = the loose minimum.) colorama is a Windows-only dependency of tqdm and is harmless on Linux.
 anndata==0.13.4
